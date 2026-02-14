@@ -1,0 +1,18 @@
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+venv/
+env/
+
+# Node / React (¡Esto es lo que más pesa!)
+node_modules/
+build/
+.env
+
+# Logs
+*.log
+npm-debug.log*
