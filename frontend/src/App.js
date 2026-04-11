@@ -126,11 +126,11 @@ function App() {
               <option value="bgcc">4. Compra a Crédito (BGCC)</option>
               <option value="bgec">5. Compra Mixta (BGEC)</option>
               <option value="bgac">6. Anticipo de Clientes (BGAC)</option>
-              <option value="bca">7. Balanza de Comprobación (BCA)</option>
-              <option value="er">8. Estado de Resultados (ER)</option>
-              <option value="ef">9. Estado de Sit. Financiera (EF)</option>
-              <option value="ld">10. Libro Diario (LD)</option>
-              <option value="lm">11. Libro Mayor (Cuentas T)</option>
+              <option value="ld">7. Libro Diario (LD)</option>
+              <option value="lm">8. Libro Mayor (Cuentas T)</option>
+              <option value="bca">9. Balanza de Comprobación (BCA)</option>
+              <option value="er">10. Estado de Resultados (ER)</option>
+              <option value="ef">11. Estado de Sit. Financiera (EF)</option>
             </select>
           </div>
         </div>
