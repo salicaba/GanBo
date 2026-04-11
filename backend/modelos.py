@@ -160,7 +160,7 @@ class ContabilidadModel:
         if tipo == "ld":
             return {
                 "es_ld": True,
-                "titulo": "Libro Diario del 23 de enero al 13 de marzo",
+                "titulo": "Libro Diario",
                 "asientos": [
                     {
                         "fecha": "2026-01-23", "concepto": "— 1 — Constitución de la empresa con aportaciones en efectivo y bienes.",

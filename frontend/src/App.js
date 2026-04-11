@@ -192,8 +192,32 @@ function App() {
           )}
 
           {data.es_er && (
-             <div className="card"><h2 className="section-title">{data.titulo}</h2><table className="balance-table"><tbody>{data.resultados.map((c, i) => (<tr key={i}><td>{c.concepto}</td><td>{formatoMoneda(c.c1)}</td><td>{formatoMoneda(c.c2)}</td><td>{formatoMoneda(c.c3)}</td><td><strong>{formatoMoneda(c.c4)}</strong></td></tr>))}</tbody></table></div>
-          )}
+   <div className="card">
+     <h2 className="section-title">{data.titulo}</h2>
+     <table className="balance-table">
+       <thead>
+         <tr>
+           <th>Cuenta / Concepto</th>
+           <th style={{textAlign: 'right'}}>Columna 1</th>
+           <th style={{textAlign: 'right'}}>Columna 2</th>
+           <th style={{textAlign: 'right'}}>Columna 3</th>
+           <th style={{textAlign: 'right'}}>Columna 4</th>
+         </tr>
+       </thead>
+       <tbody>
+         {data.resultados.map((c, i) => (
+           <tr key={i}>
+             <td style={{paddingLeft: '10px'}}>{c.concepto}</td>
+             <td className="monto">{formatoMoneda(c.c1)}</td>
+             <td className="monto">{formatoMoneda(c.c2)}</td>
+             <td className="monto">{formatoMoneda(c.c3)}</td>
+             <td className="monto"><strong>{formatoMoneda(c.c4)}</strong></td>
+           </tr>
+         ))}
+       </tbody>
+     </table>
+   </div>
+)}
 
           {data.es_ef && (
              <div className="card"><h2 className="section-title">{data.titulo}</h2><table className="balance-table"><thead><tr><th>Cuenta / Concepto</th><th style={{textAlign: 'right'}}>Columna 1</th><th style={{textAlign: 'right'}}>Columna 2</th><th style={{textAlign: 'right'}}>Columna 3</th></tr></thead><tbody>{data.secciones.map((sec, i) => (<React.Fragment key={i}>{sec.nombre && (<tr style={{background: '#f5f5f5'}}><td colSpan="4"><strong>{sec.nombre}</strong></td></tr>)}{sec.cuentas?.map((c, j) => (<tr key={j}><td style={{paddingLeft: '20px'}}>{c.n}</td><td className="monto">{formatoMoneda(c.c1)}</td><td className="monto">{formatoMoneda(c.c2)}</td><td className="monto"><strong>{formatoMoneda(c.c3)}</strong></td></tr>))}{sec.is_total && (<tr className="total-row"><td colSpan="3"><strong>{sec.n}</strong></td><td className="monto"><strong>{formatoMoneda(sec.c3)}</strong></td></tr>)}</React.Fragment>))}</tbody></table></div>
