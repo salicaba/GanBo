@@ -309,7 +309,7 @@ function App() {
         </div>
         <iframe
           title="Chatbot Contable"
-          allow="microphone *"
+          allow="microphone"
           className="chatbot-iframe"
           src="https://console.dialogflow.com/api-client/demo/embedded/5b6fa7bc-3b66-4d28-b2a4-bf307bd273a0"
         ></iframe>
