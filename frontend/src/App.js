@@ -5,7 +5,9 @@ import './App.css';
 function App() {
   const [data, setData] = useState({ activos: [], pasivos: [] });
   const [balanceKey, setBalanceKey] = useState('bgi');
-  
+  // AGREGA ESTA LÍNEA PARA EL BOT:
+  const [isBotOpen, setIsBotOpen] = useState(false);
+
   const [asientos, setAsientos] = useState([]);
   const [nuevoAsiento, setNuevoAsiento] = useState({ cuenta: '', tipo: 'cargo', monto: '' });
 
@@ -146,7 +148,7 @@ function App() {
               <option value="cargo">Debe (Cargo)</option>
               <option value="abono">Haber (Abono)</option>
             </select>
-            <input type="number" placeholder="Monto $" style={{width: '100%', marginBottom: '10px', padding: '10px'}} value={nuevoAsiento.monto} onChange={e => setNuevoAsiento({...nuevoAsiento, monto: e.target.value})} />
+            <input type="number" placeholder="Monto $" style={{width: '90%', marginBottom: '10px', padding: '10px'}} value={nuevoAsiento.monto} onChange={e => setNuevoAsiento({...nuevoAsiento, monto: e.target.value})} />
             <button className="btn-registrar" onClick={agregarAsiento}>Registrar</button>
             <button onClick={() => setAsientos([])} style={{ marginTop: '10px', width: '100%', background: '#757575', color: 'white', border: 'none', padding: '8px', cursor: 'pointer' }}>Limpiar Ajustes</button>
           </aside>
@@ -192,32 +194,32 @@ function App() {
           )}
 
           {data.es_er && (
-   <div className="card">
-     <h2 className="section-title">{data.titulo}</h2>
-     <table className="balance-table">
-       <thead>
-         <tr>
-           <th>Cuenta / Concepto</th>
-           <th style={{textAlign: 'right'}}>Columna 1</th>
-           <th style={{textAlign: 'right'}}>Columna 2</th>
-           <th style={{textAlign: 'right'}}>Columna 3</th>
-           <th style={{textAlign: 'right'}}>Columna 4</th>
-         </tr>
-       </thead>
-       <tbody>
-         {data.resultados.map((c, i) => (
-           <tr key={i}>
-             <td style={{paddingLeft: '10px'}}>{c.concepto}</td>
-             <td className="monto">{formatoMoneda(c.c1)}</td>
-             <td className="monto">{formatoMoneda(c.c2)}</td>
-             <td className="monto">{formatoMoneda(c.c3)}</td>
-             <td className="monto"><strong>{formatoMoneda(c.c4)}</strong></td>
-           </tr>
-         ))}
-       </tbody>
-     </table>
-   </div>
-)}
+            <div className="card">
+              <h2 className="section-title">{data.titulo}</h2>
+              <table className="balance-table">
+                <thead>
+                  <tr>
+                    <th>Cuenta / Concepto</th>
+                    <th style={{textAlign: 'right'}}>Columna 1</th>
+                    <th style={{textAlign: 'right'}}>Columna 2</th>
+                    <th style={{textAlign: 'right'}}>Columna 3</th>
+                    <th style={{textAlign: 'right'}}>Columna 4</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.resultados.map((c, i) => (
+                    <tr key={i}>
+                      <td style={{paddingLeft: '10px'}}>{c.concepto}</td>
+                      <td className="monto">{formatoMoneda(c.c1)}</td>
+                      <td className="monto">{formatoMoneda(c.c2)}</td>
+                      <td className="monto">{formatoMoneda(c.c3)}</td>
+                      <td className="monto"><strong>{formatoMoneda(c.c4)}</strong></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
 
           {data.es_ef && (
              <div className="card"><h2 className="section-title">{data.titulo}</h2><table className="balance-table"><thead><tr><th>Cuenta / Concepto</th><th style={{textAlign: 'right'}}>Columna 1</th><th style={{textAlign: 'right'}}>Columna 2</th><th style={{textAlign: 'right'}}>Columna 3</th></tr></thead><tbody>{data.secciones.map((sec, i) => (<React.Fragment key={i}>{sec.nombre && (<tr style={{background: '#f5f5f5'}}><td colSpan="4"><strong>{sec.nombre}</strong></td></tr>)}{sec.cuentas?.map((c, j) => (<tr key={j}><td style={{paddingLeft: '20px'}}>{c.n}</td><td className="monto">{formatoMoneda(c.c1)}</td><td className="monto">{formatoMoneda(c.c2)}</td><td className="monto"><strong>{formatoMoneda(c.c3)}</strong></td></tr>))}{sec.is_total && (<tr className="total-row"><td colSpan="3"><strong>{sec.n}</strong></td><td className="monto"><strong>{formatoMoneda(sec.c3)}</strong></td></tr>)}</React.Fragment>))}</tbody></table></div>
@@ -291,6 +293,28 @@ function App() {
         <div className="signature-block"><div className="signature-line"></div><p>Autorizado: Lic. Gonzáles Zúñiga Nuria</p></div>
         <div className="signature-block"><div className="signature-line"></div><p>Elaborado: Ing. Salinas Caballero Emmanuel</p></div>
       </footer>
+
+      {/* --- BOTÓN FLOTANTE DEL CHATBOT --- */}
+      <button 
+        className="chatbot-toggle" 
+        onClick={() => setIsBotOpen(!isBotOpen)}
+      >
+        {isBotOpen ? '✖' : '💬'}
+      </button>
+
+      {/* --- WIDGET DEL CHATBOT (OCULTABLE) --- */}
+      <div className={`chatbot-widget ${isBotOpen ? 'open' : 'closed'}`}>
+        <div className="chatbot-header">
+          Asistente NIF
+        </div>
+        <iframe
+          title="Chatbot Contable"
+          allow="microphone *"
+          className="chatbot-iframe"
+          src="https://console.dialogflow.com/api-client/demo/embedded/5b6fa7bc-3b66-4d28-b2a4-bf307bd273a0"
+        ></iframe>
+      </div>
+
     </div>
   );
 }

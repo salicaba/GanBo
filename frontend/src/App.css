@@ -246,9 +246,92 @@ select {
   font-size: 0.95rem;
 }
 
+
+/* --- CHATBOT WIDGET FLOTANTE --- */
+
+/* El botón circular de la esquina */
+.chatbot-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.chatbot-toggle:hover {
+  transform: scale(1.1);
+  background-color: var(--accent-color);
+}
+
+/* La ventana del chat */
+.chatbot-widget {
+  position: fixed;
+  bottom: 90px; /* Se eleva para no tapar el botón */
+  right: 20px;
+  z-index: 1000;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: var(--white);
+  
+  /* Lógica para ocultar/mostrar con animación suave */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.95);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transform-origin: bottom right;
+}
+
+.chatbot-widget.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.chatbot-header {
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 12px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
+
+.chatbot-iframe {
+  border: none;
+  display: block;
+  width: 350px;
+  height: 430px;
+}
+
 /* Responsividad para móviles */
-@media (max-width: 1024px) {
-  .layout-container { flex-direction: column; }
-  .sidebar-captura { width: 100%; position: static; }
-  .grid { grid-template-columns: 1fr; }
+@media (max-width: 768px) {
+  .chatbot-toggle {
+    bottom: 10px;
+    right: 10px;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+  .chatbot-widget {
+    bottom: 70px;
+    right: 10px;
+  }
+  .chatbot-iframe {
+    width: 300px;
+    height: 380px;
+  }
 }
