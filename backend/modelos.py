@@ -17,7 +17,7 @@ class ContabilidadModel:
 
         # === NUEVAS SECCIONES EXACTAS AL EXCEL ===
         
-        if tipo == "bca":
+        elif tipo == "bca":
             return {
                 "es_bca": True,
                 "titulo": "Balanza de Comprobación Ajustada",
@@ -59,8 +59,8 @@ class ContabilidadModel:
                     {"cuenta": "SUMAS IGUALES", "debe": 9966299.67, "haber": 9966299.67, "deudor": 8358431.67, "acreedor": 8358431.67}
                 ]
             }
-
-        if tipo == "er":
+            
+        elif tipo == "er":
             return {
                 "es_er": True,
                 "titulo": "Estado de Resultados",
@@ -90,7 +90,7 @@ class ContabilidadModel:
                 ]
             }
 
-        if tipo == "ef":
+        elif tipo == "ef":
             return {
                 "es_ef": True,
                 "titulo": "Estado de Situación Financiera",
@@ -112,7 +112,7 @@ class ContabilidadModel:
                             {"n": "Terrenos", "c1": "", "c2": 2500000, "c3": ""},
                             {"n": "Edificios", "c1": 1000000, "c2": "", "c3": ""},
                             {"n": "(-) Depreciación Acum. Edificios", "c1": 4166.67, "c2": 995833.33, "c3": ""},
-                            {"n": "Mobiliario y Equipo", "n": "Mobiliario y Equipo", "c1": 145000, "c2": "", "c3": ""},
+                            {"n": "Mobiliario y Equipo", "c1": 145000, "c2": "", "c3": ""},
                             {"n": "(-) Depreciación Acum. Mobiliario", "c1": 1208.33, "c2": 143791.67, "c3": ""},
                             {"n": "Equipo de Cómputo", "c1": 60000, "c2": "", "c3": ""},
                             {"n": "(-) Depreciación Acum. Eq. Cómputo", "c1": 1500, "c2": 58500, "c3": ""},
@@ -156,8 +156,8 @@ class ContabilidadModel:
                     { "n": "TOTAL PASIVO + CAPITAL", "c3": 7933548.33, "is_total": True }
                 ]
             }
-        
-        if tipo == "ld":
+            
+        elif tipo == "ld":
             return {
                 "es_ld": True,
                 "titulo": "Libro Diario",
@@ -337,7 +337,7 @@ class ContabilidadModel:
                 ]
             }
 
-        if tipo == "lm":
+        elif tipo == "lm":
             return {
                 "es_lm": True,
                 "titulo": "Libro Mayor (Cuentas T)",
@@ -412,3 +412,45 @@ class ContabilidadModel:
                 pasivos.append({"nombre": nombre_original, "valor": abs(valor)})
 
         return {"activos": activos, "pasivos": pasivos}
+
+
+# =========================================================================
+# === NUEVA FUNCIÓN PARA EL ARQUEO DE CAJA (FUERA DE LA CLASE ANTERIOR) ===
+# =========================================================================
+
+def registrar_arqueo_bd(datos_arqueo):
+    """
+    Procesa el registro del Arqueo de Caja.
+    Estructura preparada para conectarse a una base de datos relacional (ej. MySQL)
+    omitiendo el archivo Excel estático.
+    """
+    try:
+        fondo_fijo = datos_arqueo.get('fondoFijo', 0)
+        totales = datos_arqueo.get('totales', {})
+        diferencia = totales.get('diferencia', 0)
+        total_fisico = totales.get('fisico', 0)
+        
+        # Simulación en consola de la transacción a la Base de Datos
+        print("\n" + "="*40)
+        print("💰 NUEVO REGISTRO DE ARQUEO DE CAJA 💰")
+        print("="*40)
+        print(f"Fondo Fijo Inicial:     ${fondo_fijo:,.2f}")
+        print(f"Total Físico Contado:   ${total_fisico:,.2f}")
+        
+        if diferencia < 0:
+            print(f"Diferencia (Faltante):  ${diferencia:,.2f} ⚠️")
+        elif diferencia > 0:
+            print(f"Diferencia (Sobrante):  ${diferencia:,.2f} ⚠️")
+        else:
+            print(f"Diferencia:             ${diferencia:,.2f} (Caja Cuadrada ✅)")
+        print("="*40 + "\n")
+        
+        # TODO: Conexión futura a MySQL u otra BD
+        # Ejemplo:
+        # sql = "INSERT INTO arqueos (fondo_fijo, total_fisico, diferencia) VALUES (%s, %s, %s)"
+        # cursor.execute(sql, (fondo_fijo, total_fisico, diferencia))
+        
+        return True 
+    except Exception as e:
+        print(f"Error procesando el arqueo: {e}")
+        return False
